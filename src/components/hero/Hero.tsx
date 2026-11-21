@@ -4,120 +4,64 @@ import React, { useState, useEffect, useCallback, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { DEFAULT_HERO_SLIDES, HeroSlideItem } from '@/data/heroSlides'
 
 interface HeroProps {
   onRequestQuote: () => void
 }
 
-interface SlideItem {
-  id: number
-  tag: string
-  title: string
-  subtitle: string
-  description: string
-  primaryCtaText: string
-  secondaryCtaText: string
-  secondaryCtaHref: string
-  image: string
-  alt: string
-}
-
-const HERO_SLIDES: SlideItem[] = [
-  {
-    id: 1,
-    tag: 'Wholesale and Global B2B Export',
-    title: 'Authentic Moroccan Handicrafts for Global Markets',
-    subtitle: 'Handcrafted Heritage • Worldwide Shipping',
-    description:
-      'A trusted Moroccan supplier for importers, luxury hotels, retailers, and interior architects. Handcrafted masterworks, bespoke manufacturing, and reliable worldwide freight export.',
-    primaryCtaText: 'Request a Quote',
-    secondaryCtaText: 'Explore Collections',
-    secondaryCtaHref: '#products',
-    image:
-      'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=2000&q=85',
-    alt: 'Authentic Moroccan Architecture and Handicrafts',
-  },
-  {
-    id: 2,
-    tag: 'Bespoke Textiles and Weaving',
-    title: 'Handwoven Berber and Beni Ourain Rugs',
-    subtitle: '100% Atlas Mountain Virgin Wool',
-    description:
-      'Custom tribal weaves handcrafted by master Berber weavers in the High Atlas. Organic un-dyed wool, minimalist geometric patterns, and custom sizing for luxury residential and commercial spaces.',
-    primaryCtaText: 'Order Custom Rugs',
-    secondaryCtaText: 'View Rug Catalog',
-    secondaryCtaHref: '/products/rugs',
-    image:
-      'https://images.unsplash.com/photo-1600121848594-d8644e57abab?auto=format&fit=crop&w=2000&q=85',
-    alt: 'Authentic Moroccan Handwoven Rugs and Carpets',
-  },
-  {
-    id: 3,
-    tag: 'Architectural Surfaces',
-    title: 'Hand-Chiseled Moroccan Zellige Tiles',
-    subtitle: 'Timeless Terracotta Art from Morocco',
-    description:
-      'Authentic geometric mosaic tiles manually cut with artisan chisels in Morocco. Glazed with vibrant mineral enamels for signature hospitality projects, spas, feature walls, and luxury fountains.',
-    primaryCtaText: 'Get Architectural Quote',
-    secondaryCtaText: 'Explore Zellige',
-    secondaryCtaHref: '/products/zellige',
-    image:
-      'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=2000&q=85',
-    alt: 'Moroccan Zellige Tilework and Medina Architecture',
-  },
-  {
-    id: 4,
-    tag: 'Pottery and Tableware',
-    title: 'Artisan Pottery and Terracotta Ceramics',
-    subtitle: 'Hand-Thrown and Sun-Baked in Safi and Marrakech',
-    description:
-      'Traditional hand-thrown ceramics, decorative serving platters, glazed tagines, and statement planters. Custom color palettes, food-safe glazes, and reliable export pallet packaging.',
-    primaryCtaText: 'Wholesale Catalog',
-    secondaryCtaText: 'Discover Pottery',
-    secondaryCtaHref: '/products/pottery',
-    image:
-      'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=2000&q=85',
-    alt: 'Handmade Moroccan Pottery and Ceramics',
-  },
-  {
-    id: 5,
-    tag: 'Lighting and Ambience',
-    title: 'Hand-Pierced Brass and Copper Lighting',
-    subtitle: 'Filigree Shadows and Ambient Warmth',
-    description:
-      'Intricate filigree lighting fixtures casting enchanting geometric shadows. Hand-hammered brass pendants, grand chandeliers, and outdoor lanterns crafted for statement hospitality ambience.',
-    primaryCtaText: 'Get Lighting Quote',
-    secondaryCtaText: 'View Lighting',
-    secondaryCtaHref: '/products/brass',
-    image:
-      'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=2000&q=85',
-    alt: 'Handcrafted Moroccan Brass and Copper Lanterns',
-  },
-  {
-    id: 6,
-    tag: 'Artisan Leathercraft',
-    title: 'Vegetable-Tanned Moroccan Leather',
-    subtitle: 'Sourced from the Ancient Tanneries of Marrakech',
-    description:
-      'Genuine full-grain leather hand-dyed with natural barks and minerals. Famous hand-embroidered leather poufs, handcrafted weekenders, and traditional babouches crafted for international boutiques.',
-    primaryCtaText: 'Bulk Leather Orders',
-    secondaryCtaText: 'Explore Leather',
-    secondaryCtaHref: '/products/leather',
-    image:
-      'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=2000&q=85',
-    alt: 'Genuine Moroccan Leather Goods and Poufs',
-  },
-]
-
 const AUTOPLAY_INTERVAL = 5500 // 5.5 seconds
 
 export const Hero: React.FC<HeroProps> = ({ onRequestQuote }) => {
+  const [slides, setSlides] = useState<HeroSlideItem[]>(DEFAULT_HERO_SLIDES)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
   const [touchStartX, setTouchStartX] = useState<number | null>(null)
   const autoplayTimerRef = useRef<NodeJS.Timeout | null>(null)
 
-  const totalSlides = HERO_SLIDES.length
+  // Load custom slides from localStorage if saved by Admin
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('mcw_hero_slides')
+      if (stored) {
+        const parsed = JSON.parse(stored) as HeroSlideItem[]
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const activeOnly = parsed.filter((s) => s.active !== false)
+          if (activeOnly.length > 0) {
+            setSlides(activeOnly)
+          }
+        }
+      }
+    } catch {
+      // ignore JSON parse error
+    }
+
+    const handleStorageChange = () => {
+      try {
+        const stored = localStorage.getItem('mcw_hero_slides')
+        if (stored) {
+          const parsed = JSON.parse(stored) as HeroSlideItem[]
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            const activeOnly = parsed.filter((s) => s.active !== false)
+            if (activeOnly.length > 0) {
+              setSlides(activeOnly)
+            }
+          }
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+    window.addEventListener('mcw_hero_slides_updated', handleStorageChange)
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+      window.removeEventListener('mcw_hero_slides_updated', handleStorageChange)
+    }
+  }, [])
+
+  const totalSlides = slides.length || 1
 
   const goToSlide = useCallback((index: number) => {
     setCurrentSlide((index + totalSlides) % totalSlides)
@@ -182,7 +126,7 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote }) => {
       aria-label="Moroccan Craft Works Hero Showcase"
     >
       {/* Background Slides with Cross-fade and Ken Burns effect */}
-      {HERO_SLIDES.map((slide, index) => {
+      {slides.map((slide, index) => {
         const isActive = index === currentSlide
         return (
           <div
@@ -215,7 +159,7 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote }) => {
       {/* Main Slide Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-36 lg:pt-40 pb-20 sm:pb-24 w-full">
         <div className="max-w-3xl text-left space-y-5 sm:space-y-6">
-          {HERO_SLIDES.map((slide, index) => {
+          {slides.map((slide, index) => {
             const isActive = index === currentSlide
             if (!isActive) return null
 
@@ -277,7 +221,7 @@ export const Hero: React.FC<HeroProps> = ({ onRequestQuote }) => {
       {/* Bottom Controls: Centered Slide Indicators */}
       <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 z-20 flex justify-center items-center pointer-events-none">
         <div className="pointer-events-auto flex items-center space-x-2.5 bg-black/35 backdrop-blur-md border border-white/20 rounded-full px-4 py-2.5 shadow-xl">
-          {HERO_SLIDES.map((slide, index) => {
+          {slides.map((slide, index) => {
             const isActive = index === currentSlide
             return (
               <button

@@ -9,6 +9,8 @@ import {
   ShoppingCart,
   Tags,
   Images,
+  SlidersHorizontal,
+  Globe,
   ExternalLink,
   ChevronLeft,
   ChevronRight,
@@ -17,9 +19,11 @@ import { cn } from '@/lib/utils'
 
 const NAV_ITEMS = [
   { label: 'Dashboard', path: '/craftadmin', icon: LayoutDashboard },
+  { label: 'Hero Slides', path: '/craftadmin/hero-slides', icon: SlidersHorizontal },
   { label: 'Products', path: '/craftadmin/products', icon: Package },
-  { label: 'Quote Inquiries', path: '/craftadmin/orders', icon: ShoppingCart },
   { label: 'Categories', path: '/craftadmin/categories', icon: Tags },
+  { label: 'SEO & Meta Tags', path: '/craftadmin/seo', icon: Globe },
+  { label: 'Quote Inquiries', path: '/craftadmin/orders', icon: ShoppingCart },
   { label: 'Media Library', path: '/craftadmin/library', icon: Images },
 ]
 

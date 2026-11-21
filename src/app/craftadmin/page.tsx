@@ -250,6 +250,28 @@ export default function CraftAdminDashboardPage() {
                 </Link>
 
                 <Link
+                  href="/craftadmin/hero-slides"
+                  className="flex items-center justify-between p-3 rounded-lg border border-slate-100 bg-slate-50/50 hover:bg-slate-100/80 text-xs font-semibold text-slate-800 transition-colors"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-[#B85D36]" />
+                    <span>Manage Hero Slides &amp; H1</span>
+                  </div>
+                  <ChevronRight size={14} className="text-slate-400" />
+                </Link>
+
+                <Link
+                  href="/craftadmin/seo"
+                  className="flex items-center justify-between p-3 rounded-lg border border-slate-100 bg-slate-50/50 hover:bg-slate-100/80 text-xs font-semibold text-slate-800 transition-colors"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Globe2 size={16} className="text-emerald-600" />
+                    <span>SEO, Meta Tags &amp; Google Snippets</span>
+                  </div>
+                  <ChevronRight size={14} className="text-slate-400" />
+                </Link>
+
+                <Link
                   href="/craftadmin/library"
                   className="flex items-center justify-between p-3 rounded-lg border border-slate-100 bg-slate-50/50 hover:bg-slate-100/80 text-xs font-semibold text-slate-800 transition-colors"
                 >
