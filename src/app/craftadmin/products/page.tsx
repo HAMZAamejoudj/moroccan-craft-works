@@ -275,9 +275,10 @@ export default function CraftAdminProductsPage() {
                           <div className="flex items-center gap-3">
                             <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-100">
                               <Image
-                                src={p.image}
+                                src={p.image || '/images/catalog/beni_ourain_rug.jpg'}
                                 alt={p.title}
                                 fill
+                                unoptimized
                                 className="object-cover"
                               />
                             </div>
@@ -346,11 +347,13 @@ export default function CraftAdminProductsPage() {
                 key={p.id}
                 className="group flex flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xs hover:shadow-md transition-all"
               >
-                <div className="relative aspect-4/3 w-full bg-slate-100 overflow-hidden">
+                <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
                   <Image
-                    src={p.image}
+                    src={p.image || '/images/catalog/beni_ourain_rug.jpg'}
                     alt={p.title}
                     fill
+                    unoptimized
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-2.5 left-2.5 rounded-md bg-[#1a130e]/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#E8CFA0]">

@@ -18,6 +18,7 @@ import {
   Package,
 } from 'lucide-react'
 import { MediaPickerModal } from './MediaPickerModal'
+import { UkFlagIcon, FranceFlagIcon, MoroccoFlagIcon } from '@/components/ui/CountryFlags'
 import { CatalogProduct, CATALOG_CATEGORIES } from '@/lib/products-catalog'
 import { cn } from '@/lib/utils'
 
@@ -749,45 +750,45 @@ export function ProductFormModal({
                 </span>
               </div>
 
-              {/* Language Navigation Tabs */}
+              {/* Language Navigation Tabs with Real Visual Flag Icons */}
               <div className="grid grid-cols-3 rounded-xl border border-slate-200 bg-white p-1">
                 <button
                   type="button"
                   onClick={() => setActiveLang('en')}
                   className={cn(
-                    'flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all cursor-pointer',
+                    'flex items-center justify-center gap-2.5 py-2.5 rounded-lg text-xs font-bold transition-all cursor-pointer',
                     activeLang === 'en'
                       ? 'bg-[#1a130e] text-white shadow-xs'
                       : 'text-slate-600 hover:bg-slate-100'
                   )}
                 >
-                  <span>🇬🇧</span>
+                  <UkFlagIcon className="w-5 h-3.5 rounded-xs shadow-xs shrink-0" />
                   <span>English</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveLang('fr')}
                   className={cn(
-                    'flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all cursor-pointer',
+                    'flex items-center justify-center gap-2.5 py-2.5 rounded-lg text-xs font-bold transition-all cursor-pointer',
                     activeLang === 'fr'
                       ? 'bg-[#1a130e] text-white shadow-xs'
                       : 'text-slate-600 hover:bg-slate-100'
                   )}
                 >
-                  <span>🇫🇷</span>
+                  <FranceFlagIcon className="w-5 h-3.5 rounded-xs shadow-xs shrink-0" />
                   <span>Français</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setActiveLang('ar')}
                   className={cn(
-                    'flex items-center justify-center gap-2 py-2.5 rounded-lg text-xs font-bold transition-all cursor-pointer',
+                    'flex items-center justify-center gap-2.5 py-2.5 rounded-lg text-xs font-bold transition-all cursor-pointer',
                     activeLang === 'ar'
                       ? 'bg-[#1a130e] text-white shadow-xs'
                       : 'text-slate-600 hover:bg-slate-100'
                   )}
                 >
-                  <span>🇲🇦</span>
+                  <MoroccoFlagIcon className="w-5 h-3.5 rounded-xs shadow-xs shrink-0" />
                   <span>العربية</span>
                 </button>
               </div>
