@@ -12,16 +12,15 @@ import {
   ExternalLink,
   ChevronLeft,
   ChevronRight,
-  Sparkles,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const NAV_ITEMS = [
-  { label: 'Dashboard', path: '/admin', icon: LayoutDashboard },
-  { label: 'Products', path: '/admin/products', icon: Package },
-  { label: 'Quote Inquiries', path: '/admin/orders', icon: ShoppingCart },
-  { label: 'Categories', path: '/admin/categories', icon: Tags },
-  { label: 'Media Library', path: '/admin/library', icon: Images },
+  { label: 'Dashboard', path: '/craftadmin', icon: LayoutDashboard },
+  { label: 'Products', path: '/craftadmin/products', icon: Package },
+  { label: 'Quote Inquiries', path: '/craftadmin/orders', icon: ShoppingCart },
+  { label: 'Categories', path: '/craftadmin/categories', icon: Tags },
+  { label: 'Media Library', path: '/craftadmin/library', icon: Images },
 ]
 
 interface AdminSidebarProps {
@@ -68,9 +67,9 @@ export function AdminSidebar({ collapsed = false, onToggle }: AdminSidebarProps)
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon
           const isActive =
-            item.path === '/admin'
-              ? pathname === '/admin'
-              : pathname.startsWith(item.path)
+            item.path === '/craftadmin'
+              ? pathname === '/craftadmin' || pathname === '/admin'
+              : pathname.startsWith(item.path) || pathname.startsWith(item.path.replace('/craftadmin', '/admin'))
 
           return (
             <Link
@@ -88,56 +87,6 @@ export function AdminSidebar({ collapsed = false, onToggle }: AdminSidebarProps)
             </Link>
           )
         })}
-
-        {!collapsed && (
-          <div className="pt-4">
-            <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-              Live B2B Portals
-            </div>
-            <div className="space-y-0.5 mt-1">
-              <Link
-                href="/services/private-label"
-                target="_blank"
-                className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-amber-300 transition-colors"
-              >
-                <span>Private Label Page</span>
-                <ExternalLink size={13} />
-              </Link>
-              <Link
-                href="/services/wholesale"
-                target="_blank"
-                className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-amber-300 transition-colors"
-              >
-                <span>Wholesale Page</span>
-                <ExternalLink size={13} />
-              </Link>
-              <Link
-                href="/about"
-                target="_blank"
-                className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-amber-300 transition-colors"
-              >
-                <span>About Us Page</span>
-                <ExternalLink size={13} />
-              </Link>
-              <Link
-                href="/contact"
-                target="_blank"
-                className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-amber-300 transition-colors"
-              >
-                <span>Contact Page</span>
-                <ExternalLink size={13} />
-              </Link>
-              <Link
-                href="/products"
-                target="_blank"
-                className="flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium text-slate-400 hover:bg-slate-800 hover:text-amber-300 transition-colors"
-              >
-                <span>Products Catalog (160 items)</span>
-                <ExternalLink size={13} />
-              </Link>
-            </div>
-          </div>
-        )}
       </nav>
 
       {/* Footer / Quick View Site Link */}
@@ -148,7 +97,7 @@ export function AdminSidebar({ collapsed = false, onToggle }: AdminSidebarProps)
           className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-colors"
         >
           <ExternalLink size={16} className="shrink-0 text-amber-400" />
-          {!collapsed && <span>View Live Site</span>}
+          {!collapsed && <span>View Live Store</span>}
         </Link>
       </div>
     </aside>
