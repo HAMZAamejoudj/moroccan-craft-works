@@ -353,19 +353,6 @@ export default function CraftAdminCategoriesPage() {
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent" />
-                
-                {/* Badges on image */}
-                <div className="absolute top-3 left-3 flex items-center gap-1.5">
-                  <span className="rounded-md bg-[#1a130e]/85 backdrop-blur px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-[#E8CFA0] ring-1 ring-[#C9A24B]/30">
-                    {cat.artisanRegion}
-                  </span>
-                </div>
-
-                <div className="absolute top-3 right-3">
-                  <span className="rounded-full bg-white/90 backdrop-blur px-2.5 py-0.5 text-[10px] font-bold text-slate-800 shadow-sm">
-                    {cat.productCount} products
-                  </span>
-                </div>
 
                 {/* Bottom Title bar on image */}
                 <div className="absolute bottom-3 left-4 right-4">
@@ -381,6 +368,13 @@ export default function CraftAdminCategoriesPage() {
 
               {/* Card Body */}
               <div className="flex flex-1 flex-col p-5">
+                <div className="flex items-center justify-between text-[11px] font-medium text-slate-500 mb-2 pb-2 border-b border-slate-100">
+                  <span className="text-[#8C6D58] font-semibold">
+                    {cat.artisanRegion}
+                  </span>
+                  <span className="text-slate-400">{cat.productCount} products</span>
+                </div>
+
                 <p className="text-xs text-slate-600 leading-relaxed flex-1">
                   {cat.descriptionEn}
                 </p>

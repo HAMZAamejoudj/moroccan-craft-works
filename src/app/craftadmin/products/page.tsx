@@ -356,9 +356,6 @@ export default function CraftAdminProductsPage() {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-2.5 left-2.5 rounded-md bg-[#1a130e]/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#E8CFA0]">
-                    {p.category}
-                  </div>
                 </div>
 
                 <div className="flex flex-1 flex-col p-4">
