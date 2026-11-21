@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard,
@@ -43,19 +44,50 @@ export function AdminSidebar({ collapsed = false, onToggle }: AdminSidebarProps)
       )}
     >
       {/* Top Brand Bar */}
-      <div className="flex h-16 items-center justify-between border-b border-slate-800 px-4">
-        {!collapsed && (
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#B85D36]" />
-            <span className="font-serif text-base font-bold text-amber-400 tracking-wide">
-              MCW Admin
+      <div
+        className={cn(
+          'flex h-16 items-center border-b border-slate-800 transition-all',
+          collapsed ? 'justify-between px-2.5' : 'justify-between px-4'
+        )}
+      >
+        {!collapsed ? (
+          <Link href="/craftadmin" className="flex items-center gap-2 group min-w-0">
+            <div className="relative h-10 w-36 shrink-0">
+              <Image
+                src="/MoroccanCraftWorks_Logo_FIXED_White.svg"
+                alt="Moroccan Craft Works Logo"
+                fill
+                priority
+                unoptimized
+                className="object-contain object-left transition-opacity group-hover:opacity-90"
+              />
+            </div>
+            <span className="rounded bg-[#B85D36]/25 border border-[#B85D36]/40 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-amber-300">
+              Admin
             </span>
-          </div>
+          </Link>
+        ) : (
+          <Link
+            href="/craftadmin"
+            className="flex items-center justify-center shrink-0"
+            title="Moroccan Craft Works Admin"
+          >
+            <div className="relative h-8 w-8">
+              <Image
+                src="/MoroccanCraftWorks_Logo_FIXED_White.svg"
+                alt="Moroccan Craft Works Logo"
+                fill
+                priority
+                unoptimized
+                className="object-contain"
+              />
+            </div>
+          </Link>
         )}
         <button
           type="button"
           onClick={onToggle}
-          className="rounded-md p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors cursor-pointer"
+          className="rounded-md p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white transition-colors cursor-pointer shrink-0"
           title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
