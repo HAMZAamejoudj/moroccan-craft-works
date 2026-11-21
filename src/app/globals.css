@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --moroccan-cream: #FAF7F2;
+  --moroccan-gold: #996733;
+  --moroccan-terracotta: #B85D36;
+  --moroccan-dark: #201610;
+}
+
+body {
+  background-color: var(--moroccan-cream);
+  color: var(--moroccan-dark);
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar matching Moroccan tones */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C59B27;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #996733;
+}
+
+/* Moroccan decorative divider */
+.moroccan-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.moroccan-divider::before,
+.moroccan-divider::after {
+  content: '';
+  height: 1px;
+  background-color: #D1B89D;
+  flex: 1;
+}
+
+/* Smooth transitions */
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Continuous Infinite Marquee Carousel (Right to Left, sans arrêt, always 100% full) */
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-33.333333%, 0, 0);
+  }
+}
+
+.animate-marquee-infinite {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 48s linear infinite;
+  will-change: transform;
+}
+
+/* Pause marquee seamlessly on hover */
+.marquee-container:hover .animate-marquee-infinite,
+.animate-marquee-infinite:hover {
+  animation-play-state: paused !important;
+}
+
+/* Hide scrollbar for clean horizontal carousel */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
